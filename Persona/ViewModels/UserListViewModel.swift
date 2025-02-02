@@ -25,7 +25,7 @@ final class UserListViewModel {
     func loadAllUsers() async {
         do {
             let fetchedUsers = try await repository.fetchAllUsers()
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.users = fetchedUsers
                 self.onUsersUpdated?()
             }
