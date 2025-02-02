@@ -11,7 +11,7 @@ import XCTest
 
 final class NetworkingTests: XCTestCase {
 
-    func testMakeRequest_Success() async throws {
+    func testMakeRequestSuccess() async throws {
         let networking = Networking()
         let request = UserListRequest()
         

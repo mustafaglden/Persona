@@ -25,7 +25,7 @@ final class UserListViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testLoadAllUsers_Success() async {
+    func testLoadAllUsersSuccess() async {
         let expectation = XCTestExpectation(description: "Users loaded successfully")
         
         viewModel.onUsersUpdated = {
@@ -40,7 +40,7 @@ final class UserListViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1)
     }
     
-    func testLoadAllUsers_Failure() async {
+    func testLoadAllUsersFailure() async {
         mockRepository.shouldReturnError = true
         await viewModel.loadAllUsers()
         
