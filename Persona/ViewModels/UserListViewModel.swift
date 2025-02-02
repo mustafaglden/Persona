@@ -8,23 +8,22 @@
 import Foundation
 
 final class UserListViewModel {
-    private var allUsers: [UserListResponseModel] = []
-    let networking: NetworkManager
-
-    var users: [UserListResponseModel] {
-        return allUsers
-    }
     
-    init(networking: NetworkManager = Networking()) {
-        self.networking = networking
+    private let repository: UserRepositoryProtocol
+    var users: [UserListResponseModel] = []
+    
+    var onUsersUpdated: (() -> Void)?
+
+    init(repository: UserRepositoryProtocol = UserRepository()) {
+        self.repository = repository
     }
     
     func loadAllUsers() async {
         do {
-            let request = UserListRequest()
-            let response = try await networking.makeRequest(request)
-            await MainActor.run {
-                self.allUsers = response // Update the users list
+            let fetchedUsers = try await repository.fetchAllUsers()
+            DispatchQueue.main.async {
+                self.users = fetchedUsers
+                self.onUsersUpdated?()
             }
         } catch {
             print("Error fetching users: \(error.localizedDescription)")

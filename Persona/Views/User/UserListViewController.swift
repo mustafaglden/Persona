@@ -9,17 +9,27 @@ import UIKit
 
 final class UserListViewController: BaseViewController {
     
-    private let viewModel = UserListViewModel()
+    private let viewModel: UserListViewModel
     private var collectionView: UICollectionView!
+
+    init(viewModel: UserListViewModel = UserListViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabelText = "User List"
         
         setupCollectionView()
+        setupViewModel()
         loadUsers()
     }
-    
+
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.frame.width - 32, height: 100)
@@ -42,12 +52,15 @@ final class UserListViewController: BaseViewController {
         ])
     }
     
+    private func setupViewModel() {
+        viewModel.onUsersUpdated = { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+
     private func loadUsers() {
         Task {
             await viewModel.loadAllUsers()
-            await MainActor.run {
-                self.collectionView.reloadData()
-            }
         }
     }
 }

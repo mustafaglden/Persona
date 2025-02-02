@@ -28,8 +28,9 @@ final class UserCollectionViewCell: UICollectionViewCell {
         clipsToBounds = true
         
         nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        nameLabel.textColor = .burgundy
         emailLabel.font = UIFont.systemFont(ofSize: 14)
-        emailLabel.textColor = .gray
+        emailLabel.textColor = .snowWhite
         
         let stackView = UIStackView(arrangedSubviews: [nameLabel, emailLabel])
         stackView.axis = .vertical

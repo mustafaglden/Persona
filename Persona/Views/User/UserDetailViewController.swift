@@ -26,7 +26,7 @@ final class UserDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .snowGray
         titleLabelText = user.name
         setupViews()
         configure()
@@ -38,8 +38,9 @@ final class UserDetailViewController: BaseViewController {
         phoneLabel.font = UIFont.systemFont(ofSize: 18)
         websiteLabel.font = UIFont.systemFont(ofSize: 18)
         
-        emailLabel.textColor = .darkGray
-        phoneLabel.textColor = .darkGray
+        nameLabel.textColor = .burgundy
+        emailLabel.textColor = .lightBurgundy
+        phoneLabel.textColor = .lightBurgundy
         websiteLabel.textColor = .blue
         
         websiteLabel.isUserInteractionEnabled = true

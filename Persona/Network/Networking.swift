@@ -40,3 +40,4 @@ final class Networking: NetworkManager {
         print(data.prettyPrintedJSONString ?? "")
     }
 }
+
