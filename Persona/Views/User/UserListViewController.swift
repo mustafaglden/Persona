@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// This class is responsible for displaying a list of users in a collection view
 final class UserListViewController: BaseViewController {
     
     private let viewModel: UserListViewModel
@@ -21,6 +22,7 @@ final class UserListViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // Called when the view is loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabelText = "User List"
@@ -30,6 +32,7 @@ final class UserListViewController: BaseViewController {
         loadUsers()
     }
 
+    /// Function to set up the collection view
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.frame.width - 32, height: 100)
@@ -52,12 +55,14 @@ final class UserListViewController: BaseViewController {
         ])
     }
     
+    /// Function to set up the ViewModel's bindings
     private func setupViewModel() {
         viewModel.onUsersUpdated = { [weak self] in
             self?.collectionView.reloadData()
         }
     }
 
+    /// Function to load users using async API call
     private func loadUsers() {
         Task {
             await viewModel.loadAllUsers()
@@ -65,6 +70,8 @@ final class UserListViewController: BaseViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
+/// Conforming to UICollectionViewDataSource to manage data for the collection view
 extension UserListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.users.count
@@ -81,6 +88,8 @@ extension UserListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+/// Conforming to UICollectionViewDelegate to handle cell taps
 extension UserListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = viewModel.users[indexPath.item]

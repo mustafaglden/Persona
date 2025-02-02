@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Custom collection view cell to display user details.
 final class UserCollectionViewCell: UICollectionViewCell {
     
     private let nameLabel = UILabel()
@@ -21,6 +22,7 @@ final class UserCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Sets up the cell UI.
     private func setupViews() {
         layer.cornerRadius = 8
         layer.borderColor = UIColor.lightGray.cgColor
@@ -46,6 +48,7 @@ final class UserCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    /// Configures the cell with user data.
     func configure(with user: UserListResponseModel) {
         nameLabel.text = user.name
         emailLabel.text = user.email

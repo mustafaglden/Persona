@@ -7,11 +7,13 @@
 
 import UIKit
 
+/// Displays detailed user information.
 final class UserDetailViewController: BaseViewController {
     private let user: UserListResponseModel
     private let scrollView = UIScrollView()
     private let contentView = UIView()
 
+    /// Initializes the view with a user.
     init(user: UserListResponseModel) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -29,6 +31,7 @@ final class UserDetailViewController: BaseViewController {
         setupContentView()
     }
     
+    /// Sets up the scroll view.
     private func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +43,7 @@ final class UserDetailViewController: BaseViewController {
         ])
     }
     
+    /// Sets up the content view inside the scroll view.
     private func setupContentView() {
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,11 +68,12 @@ final class UserDetailViewController: BaseViewController {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
         
+        // Adds sections with user details.
         stackView.addArrangedSubview(createSectionView(title: "Personal Information", items: [
             ("Name", user.name),
             ("Username", user.username),
-            ("Email", "\(user.email)"),
-            ("Phone", "\(user.phone)")
+            ("Email", user.email),
+            ("Phone", user.phone)
         ]))
         
         stackView.addArrangedSubview(createSectionView(title: "Address", items: [
@@ -89,6 +94,7 @@ final class UserDetailViewController: BaseViewController {
             ("BS", user.company.bs)
         ]))
         
+        // Adds an interactive website label.
         let websiteLabel = createInteractiveLabel(text: "🌐 \(user.website)")
         websiteLabel.textColor = .systemBlue
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
@@ -96,6 +102,7 @@ final class UserDetailViewController: BaseViewController {
         stackView.addArrangedSubview(websiteLabel)
     }
     
+    /// Creates a section with title and key-value details.
     private func createSectionView(title: String, items: [(String, String)]) -> UIView {
         let sectionView = UIView()
         let titleLabel = UILabel()
@@ -122,6 +129,7 @@ final class UserDetailViewController: BaseViewController {
             stackView.bottomAnchor.constraint(equalTo: sectionView.bottomAnchor)
         ])
         
+        // Adds key-value labels to the section.
         for (key, value) in items {
             let label = UILabel()
             let attributedString = NSMutableAttributedString(string: "\(key): ", attributes: [
@@ -140,6 +148,7 @@ final class UserDetailViewController: BaseViewController {
         return sectionView
     }
 
+    /// Creates an interactive label.
     private func createInteractiveLabel(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -149,10 +158,10 @@ final class UserDetailViewController: BaseViewController {
         return label
     }
     
+    /// Opens the user's website in Safari.
     @objc private func openWebsite() {
         if let url = URL(string: "https://\(user.website)") {
             UIApplication.shared.open(url)
         }
     }
 }
-

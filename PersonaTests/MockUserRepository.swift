@@ -8,11 +8,15 @@
 import Foundation
 @testable import Persona
 
+/// Mock implementation of UserRepositoryProtocol for testing
 final class MockUserRepository: UserRepositoryProtocol {
     
+    // Flag to control whether an error should be thrown
     var shouldReturnError = false
     
+    // Simulated fetch function that returns mock user data or throws an error
     func fetchAllUsers() async throws -> [UserListResponseModel] {
+        // If the error flag is set, throw a mock error
         if shouldReturnError {
             throw NSError(domain: "TestError", code: 500, userInfo: nil)
         }
